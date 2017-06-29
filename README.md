@@ -11,3 +11,11 @@
   </p>
   </p>
 </div>
+
+### This bot is split in two different languages, JavaScript (node.js) and Lua (Luvit). Below you will find Luvit installation method.
+
+### Installation
+
+- To install Luvit, visit https://luvit.io and follow the instructions provided for your platform.
+- Download from this repository the folder named "deps" and place it in the folder where you will run your bot.
+- Run your bot script using, for example, `luvit main.lua`
