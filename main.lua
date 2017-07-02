@@ -102,12 +102,13 @@ end
 local logChannelID = "329968138764419074"
 
 local allowedGuildID = {
-	["329968138764419074"] = true, 
+	["327802148295278593"] = true, 
 	["327068439695065088"] = true
 }
 
 client:on('ready', function()
 	p(string.format('Logged in as %s', client.user.username))
+	client:setGameName("!vouchhelp")
 end)
 
 client:on("messageCreate", function(message)
@@ -195,6 +196,10 @@ client:on("messageCreate", function(message)
 			for user in message.mentionedUsers do
 
 				local member = user:getMembership(guild)
+				if member.id == author.id then
+					func.Restricted(message, "You cant vouch yourself.")
+					return
+				end
 				local initialVouch = vouches[member.id] and vouches[member.id].count or 0
 				local info = Responses:sayResponse({
 					prompt = message.author.mentionString..", "..member.name.." will receive one more vouch, please introduce any information about it.",
@@ -244,14 +249,12 @@ client:on("messageCreate", function(message)
 						type = "number" 
 					}
 				}, message)
-				p(vouchNumber)
-				p(vouches[member.id])
 				
 				if vouches[member.id] and vouches[member.id].vouchInfo[vouchNumber] then
 					print("in")
 					vouches[member.id].vouchInfo[vouchNumber] = nil
 					vouches[member.id].count = vouches[member.id].count - 1
-				end				
+				end
 				member:setNickname(string.format("[%d %s] "..member.username, vouches[member.id].count, vouches[member.id].count == 1 and "Vouch" or "Vouches"))
 				member:sendMessage("Hello!\nYour vouch number ``"..vouchNumber.."`` has been removed by "..message.author.username)
 				io.open("vouches.json", "w"):write(json.encode(vouches)):close()
