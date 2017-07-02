@@ -17,6 +17,7 @@ Copyright (C) {2017}  {PurgePJ}
 
 "use strict";
 let Discord = require("discord.js");
+var fs = require('fs');
 
 class VouchBot {
     constructor(token) {
@@ -61,7 +62,8 @@ class VouchBot {
         let args = commandContent.slice(1);
         let guild = message.guild;
         let channel = message.channel;
-        let vouches = this.vouches;
+        var vouches = JSON.parse(fs.readFileSync("./vouches.json", 'utf8'));
+
         let bot = this.bot;
 
 
@@ -84,7 +86,7 @@ class VouchBot {
                 }
 
                 vouches[id].vouchInfo.forEach((inside, index) => {
-                    embed.description = embed.description + "\n\n**Vouch number: **__**" + (index + 1) + "**__\n**Information**: " + inside.information + "\n**Evidence**: " + inside.proof;
+                    embed.description = embed.description + "\n\n**Vouch ID: **__**" + (index + 1) + "**__\n**Information**: " + inside.information + "\n**Evidence**: " + inside.proof;
                 });
 
                 channel.send('', {embed})
