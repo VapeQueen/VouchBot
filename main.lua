@@ -96,7 +96,6 @@ local function xplicit(str, number)
 	end
 end
 
-
 ------------ SETTINGS ---------------
 
 local logChannelID = "329968138764419074"
@@ -109,6 +108,9 @@ local allowedGuildID = {
 client:on('ready', function()
 	p(string.format('Logged in as %s', client.user.username))
 	client:setGameName("!vouchhelp")
+	timer.setInterval(1000*60*60*24, function()
+		client:stop(true)
+	end)
 end)
 
 client:on("messageCreate", function(message)
@@ -128,7 +130,7 @@ client:on("messageCreate", function(message)
 		if threeDaysPassed(message) == true then
 
 			if xplicit(arg, 1) == "block" then
-				if allowed(author:getMembership(message.guild)) == true then
+				if allowed(message.member) == true then
 					for user in message.mentionedUsers do
 
 						local member = user:getMembership(guild)
@@ -208,7 +210,7 @@ client:on("messageCreate", function(message)
 					}
 				}, message)
 				local proof = Responses:sayResponse({
-					prompt = message.author.mentionString..", now please introduce the proofs.",
+					prompt = message.author.mentionString..", now please introduce the proofs. (Link of the screenshot, image...)",
 					input = {
 						type = "string" 
 					}
