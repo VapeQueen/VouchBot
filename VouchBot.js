@@ -1,4 +1,5 @@
 /*
+
 Copyright (C) {2017}  {PurgePJ}
 
     This program is free software: you can redistribute it and/or modify
@@ -70,6 +71,29 @@ class VouchBot {
         if (!message.content.startsWith(this.prefix)) return;
         if (message.content.length < 1) return;
 
+        // if (command === "vouchlist") {
+            // message.mentions.users.map(function(user) {
+                // let output = "";
+                // let id = user.id;
+                // if (vouches[id] == undefined) {
+                    // channel.sendMessage(":x: **Error**: That user has 0 vouches currently. :x:");
+                    // return;
+                // }
+
+                // let embed = {
+                    // color: 560549,
+                    // title: ":clipboard: __**Vouch Information for**__ " + user.username + "  :bar_chart: ",
+                    // description: ""
+                // }
+
+                // vouches[id].vouchInfo.forEach((inside, index) => {
+                    // embed.description = embed.description + "\n\n**Vouch ID: **__**" + (index + 1) + "**__\n**Information**: " + inside.information + "\n**Evidence**: " + inside.proof;
+                // });
+
+                // channel.send('', {embed})
+            // });
+        // };
+
         if (command === "vouchlist") {
             message.mentions.users.map(function(user) {
                 let output = "";
@@ -85,11 +109,25 @@ class VouchBot {
                     description: ""
                 }
 
-                vouches[id].vouchInfo.forEach((inside, index) => {
-                    embed.description = embed.description + "\n\n**Vouch ID: **__**" + (index + 1) + "**__\n**Information**: " + inside.information + "\n**Evidence**: " + inside.proof;
-                });
-
-                channel.send('', {embed})
+                var list = vouches[id].vouchInfo;
+                var str = "";
+                
+                var i;
+                for (i in list) {
+                    str = "\n\n**Vouch ID: **__**" + (+i+1) + "**__\n**Information**: " + list[i].information + "\n**Evidence**: " + list[i].proof;
+                    if (embed.description.length + str.length < 2049) {
+                        embed.description += str;
+                    } else {
+                        channel.send('', {embed});
+                        embed.title = "";
+                        embed.description = str;
+                    }
+                    str = "";
+                }
+                
+                if (embed.description != "") {
+                    channel.send('', {embed});
+                }
             });
         };
 
@@ -103,24 +141,23 @@ class VouchBot {
 
             for (var key in vouches) {
                 if (vouches.hasOwnProperty(key)) {
-                    counter[key] = vouches[key].count;
+                    counter[counter.length] = [key, vouches[key].count];
                 };
             };
-            counter.sort(function(a, b) {
-                return a - b
-            })
+            
+            counter.sort(function (a,b) {
+                if (a[1] < b[1]) return  1;
+                if (a[1] > b[1]) return -1;
+                return 0;
+            });
 
-            let current = Object.keys(counter).length + 1
-            console.log(counter)
-            if (current >= 11) current = 11;
-            for (var key in counter) {
-                current--;
-                if (counter.hasOwnProperty(key)) {
-                    if (current >= 0) {
-                        embed.description = "\n\n**[Rank " + current + "]** " + (bot.users.get(key) || "User left") + "\n**Vouches**: " + counter[key] + embed.description;
-                    };
-                };
-            };
+            var count = 1;
+            while (count < 11) {
+                if (counter.length >= count) {
+                    embed.description += "\n\n**[Rank " + count + "]** " + (bot.users.get(counter[count - 1][0]) || "User left") + "\n**Vouches**: " + counter[count - 1][1];
+                }
+                count++;
+            }
 
             channel.send('', {embed});
         };
@@ -136,5 +173,6 @@ class VouchBot {
         };
     };
 };
+
 
 let instance = new VouchBot("TOKEN");
