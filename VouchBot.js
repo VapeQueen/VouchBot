@@ -107,12 +107,13 @@ class VouchBot {
                 };
             };
             counter.sort(function(a, b) {
-                return b - a
+                return a - b
             })
 
             let current = Object.keys(counter).length + 1
+            console.log(counter)
             if (current >= 11) current = 11;
-            for (var key in counter.reverse()) {
+            for (var key in counter) {
                 current--;
                 if (counter.hasOwnProperty(key)) {
                     if (current >= 0) {
