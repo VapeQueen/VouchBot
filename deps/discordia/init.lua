@@ -1,15 +1,19 @@
-require('./extensions')
-_G.class = require('./class')
-
 return {
-	Client = require('./client/Client'),
-	Buffer = require('./utils/Buffer'),
-	Cache = require('./utils/Cache'),
-	Color = require('./utils/Color'),
-	Deque = require('./utils/Deque'),
-	Emitter = require('./utils/Emitter'),
-	Mutex = require('./utils/Mutex'),
-	OrderedCache = require('./utils/OrderedCache'),
-	Permissions = require('./utils/Permissions'),
-	Stopwatch = require('./utils/Stopwatch'),
+	class = require('class'),
+	enums = require('enums'),
+	extensions = require('extensions'),
+	package = require('./package.lua'),
+	Client = require('client/Client'),
+	WebhookClient = require('client/WebhookClient'),
+	Clock = require('utils/Clock'),
+	Color = require('utils/Color'),
+	Date = require('utils/Date'),
+	Deque = require('utils/Deque'),
+	Emitter = require('utils/Emitter'),
+	Logger = require('utils/Logger'),
+	Mutex = require('utils/Mutex'),
+	Permissions = require('utils/Permissions'),
+	Stopwatch = require('utils/Stopwatch'),
+	Time = require('utils/Time'),
+	storage = {}
 }
