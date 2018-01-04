@@ -12,38 +12,38 @@ func.r = function(index, times)                     -- repeat
 end
 
 func.Restricted = function(message, str)
-    return message.channel:sendMessage(" ", {
+    return message.channel:send({embed = {
         ["description"] = "**Restricted Command**\n"..str or "", 
         ["color"] = 16520231,
-    })
+    }})
 end
 
 func.error = function(message, str)
-    return message.channel:sendMessage(" ", {
+    return message.channel:send({embed = {
         ["description"] = "**Error**\n"..str, 
         ["color"] = 16520231,
-    })
+    }})
 end
 
 func.Requesting = function(message, str)
-    return message.channel:sendMessage(" ", {
+    return message.channel:send({embed = {
         ["description"] = "**Requesting...**\n"..str, 
         ["color"] = 15917850,
-    })
+    }})
 end
 
 func.Success = function(message, str)
-    return message.channel:sendMessage(" ", {
+    return message.channel:send({embed = {
         ["description"] = "**Success**\n"..str, 
         ["color"] = 1765979,
-    })
+    }})
 end
 
 func.Info = function(message, str)
-    return message.channel:sendMessage(" ", {
+    return message.channel:send({embed = {
         ["description"] = "**Info**\n"..str, 
         ["color"] = 4359924,
-    })
+    }})
 end
 
 return func
