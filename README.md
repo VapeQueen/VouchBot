@@ -19,3 +19,4 @@
 - To install Luvit, visit https://luvit.io and follow the instructions provided for your platform.
 - Download from this repository the folder named "deps" and place it in the folder where you will run your bot. This is a MUST DO step, the bot uses a modified version of the library 'Discordia'.
 - Run your bot script using, for example, `luvit main.lua`
+[![Run on Repl.it](https://repl.it/badge/github/Xh4H/VouchBot)](https://repl.it/github/Xh4H/VouchBot)
